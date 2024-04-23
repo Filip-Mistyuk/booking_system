@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if request.user.is_authenticated%}
+    {% if request.user.is_authenticated %}
         <p class="h2">Booking form</p>
         <form method="POST" action="{% url 'booking-form' %}">
         {% csrf_token %}
@@ -15,7 +15,15 @@
         <div class="mb-3">
             <label for="end_time" class="form-label">End time:</label>
             <input type="datetime-local" class="form-control" id="end_time" name="end_time">
-          </div>   
+          </div>  
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ request.user.username }}" readonly>
+          </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}" readonly>
+          </div> 
         <button type="submit" class="button-18">Book this room</button>
         </form>
 

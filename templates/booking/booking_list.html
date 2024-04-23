@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking List</title>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .container {
+            align-items: center;
+            text-align: center;
+            background-color: #e4dede;
+            border-radius: 20px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        .btn-container {
+            background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+            border-radius: 20px;
+            width: 100px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .btn-container:hover {
+            background-position: right center;
+            background-size: 200% auto;
+            -webkit-animation: pulse 2s infinite;
+            animation: pulse512 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Booking List</h1>
+    <div class="btn-container">
+        <a class="back " style="display: flex; justify-content: center; align-items: center; padding: 5px; text-decoration: none; color: #ffffff;" href="/" >Back</a>
+    </div>    
+    </div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.room }}</td>
+            <td>{{ booking.start_time }}</td>
+            <td>{{ booking.end_time }}</td>
+            <td>
+                <a href="{% url 'booking_edit' booking.id %}">Edit</a> |
+                <a href="{% url 'booking_delete' booking.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,24 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul>
-        <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col"><p class="h5">Number</p></th>
-                    <th scope="col"><p class="h5">Capacity</p></th>
-                    <th scope="col"><p class="h5">Description</p></th>
-                  </tr>
-                </thead>
-                <tbody>
-        {% for room in rooms %}
-        <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td><a href="{% url 'room' room.id %}">{{ room.number }}</a></td>
-                <td>{{room.capacity}}</td>
-                <td>{{room.description}}</td>
-              </tr>               
-
-        {% endfor %}
-</ul>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for room in rooms %}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">#{{ room.number }}</h5>
+                <p class="card-text">Capacity: {{ room.capacity }}</p>
+                <p class="card-text">{{ room.description }}</p>
+                <a href="{% url 'room' room.id %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}
