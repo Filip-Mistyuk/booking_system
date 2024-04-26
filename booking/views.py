@@ -73,23 +73,25 @@ def room_availability_calendar(request):
     rooms = Room.objects.all()
     return render(request, 'availability_calendar.html', {'rooms': rooms})
 
+
+def room_delete(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    if request.method == "POST":
+        room.delete()
+        return redirect('rooms')
+    return render(request, 'booking/room_confirm_delete.html', {'room': room})
+
 def room_edit(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
     if request.method == "POST":
         form = RoomForm(request.POST, instance=room)
         if form.is_valid():
             form.save()
-            return redirect('room_list')
+            return redirect('rooms')
     else:
         form = RoomForm(instance=room)
-    return render(request, 'room_form.html', {'form': form})
+    return render(request, 'booking/room_edit.html', {'form': form})
 
-def room_delete(request, room_id):
-    room = get_object_or_404(Room, pk=room_id)
-    if request.method == "POST":
-        room.delete()
-        return redirect('room_list')
-    return render(request, 'room_confirm_delete.html', {'room': room})
 
 def room_list(request):
     rooms = Room.objects.all()

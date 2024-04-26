@@ -5,4 +5,8 @@
     <h1>Capacity: {{ room.capacity }}</h1>
     <h1>Description: {{ room.description }}</h1>
 </ul>
+{% if user.is_authenticated %}
+    <a href="{% url 'room_edit' room.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'room_delete' room.id %}" class="btn btn-danger">Видалити</a>
+{% endif %}
 {% endblock content %}
