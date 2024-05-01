@@ -5,11 +5,13 @@ class Room(models.Model):
     name = models.CharField(max_length=100)
     number = models.CharField(max_length=63)
     capacity = models.IntegerField()
-    description = models.TextField()
+    description = models.TextField(max_length=100)
+    image1 = models.ImageField(upload_to='static/images/', blank=True, null=True)
+    image2 = models.ImageField(upload_to='static/images/', blank=True, null=True)
+    image3 = models.ImageField(upload_to='static/images/', blank=True, null=True)
     
     def __str__(self):
         return self.number
-    
 
 class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="booked")

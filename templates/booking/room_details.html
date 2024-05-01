@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<ul>
-    <h1>Number: {{ room.number }}</h1>
-    <h1>Capacity: {{ room.capacity }}</h1>
-    <h1>Description: {{ room.description }}</h1>
-</ul>
-{% if user.is_authenticated %}
-    <a href="{% url 'room_edit' room.id %}" class="btn btn-primary">Edit</a>
-    <a href="{% url 'room_delete' room.id %}" class="btn btn-danger">Видалити</a>
-{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Room Details</h1>
+            <ul>
+                <li><strong>Number:</strong> {{ room.number }}</li>
+                <li><strong>Capacity:</strong> {{ room.capacity }}</li>
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Description:</strong> {{ room.description }}
+                    </div>     
+                </div>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                {% if room.image1 %}
+                    <img src="{{ room.image1.url }}" class="img-fluid" alt="Room Image 1">
+                {% endif %}
+            </div>
+            <div class="col-md-4 mb-4">
+                {% if room.image2 %}
+                    <img src="{{ room.image2.url }}" class="img-fluid" alt="Room Image 2">
+                {% endif %}
+            </div>
+            <div class="col-md-4 mb-4">
+                {% if room.image3 %}
+                    <img src="{{ room.image3.url }}" class="img-fluid" alt="Room Image 3">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if user.is_authenticated and user.is_superuser %}
+    <div class="mt-3">
+        <a href="{% url 'room_edit' room.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'room_delete' room.id %}" class="btn btn-danger">Delete</a>
+    </div>
+    {% endif %}
+</div>
 {% endblock content %}

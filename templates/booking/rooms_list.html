@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/rooms_list.css' %}">
+</head>
+<body>
 {% block content %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for room in rooms %}
@@ -9,9 +17,12 @@
                 <p class="card-text">Capacity: {{ room.capacity }}</p>
                 <p class="card-text">{{ room.description }}</p>
                 <a href="{% url 'room' room.id %}" class="btn btn-primary">View Details</a>
+                <a href="{% url 'room-availability-calendar' room.id %}" class="btn btn-primary">View Avaibility</a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
 {% endblock content %}
+</body>
+</html>

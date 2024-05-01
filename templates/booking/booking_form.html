@@ -5,9 +5,13 @@
         <form method="POST" action="{% url 'booking-form' %}">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="room_number" class="form-label">Room number:</label>
-            <input type="text" class="form-control" id="room_number" name="room_number" placeholder="example: 1A">
-          </div>
+          <label for="room_number" class="form-label">Select a room:</label>
+          <select name="room_number" id="room_number" class="form-control">
+            {% for room in rooms %}
+              <option value="{{ room.number }}">{{ room.number }}</option>
+            {% endfor %}
+          </select>
+      </div>
         <div class="mb-3">
             <label for="start_time" class="form-label">Start time:</label>
             <input type="datetime-local" class="form-control" id="start_time" name="start_time">

@@ -9,4 +9,4 @@ class BookingForm(forms.ModelForm):
 class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
-        fields = ['number', 'capacity', 'description']
+        fields = ['name', 'number', 'capacity', 'description', 'image1', 'image2', 'image3']

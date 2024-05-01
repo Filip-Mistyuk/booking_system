@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from booking.models import *
+from .models import Room
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import BookingForm, RoomForm
+from django.utils import timezone
+import datetime
+from calendar import monthrange
+
+
 
 @login_required(login_url='register-form')
 def get_rooms_list(request):
@@ -30,7 +36,8 @@ def get_booking_details(request, pk):
 
 def get_booking_form(request):
     if request.method == "GET":
-        return render(request, "booking/booking_form.html")
+        rooms = Room.objects.all()
+        return render(request, "booking/booking_form.html", {"rooms": rooms})
     else:
         room_number = request.POST.get("room_number")
         start_time = request.POST.get("start_time")
@@ -69,9 +76,30 @@ def booking_delete(request, booking_id):
         return redirect('booking_list')
     return render(request, 'booking/booking_delete_confirm.html', {'booking': booking})
 
-def room_availability_calendar(request):
-    rooms = Room.objects.all()
-    return render(request, 'availability_calendar.html', {'rooms': rooms})
+def get_room_avaibility(request, pk: int):
+    room = get_object_or_404(Room, pk=pk)
+    today = timezone.now()
+    first_day_of_month = datetime.date(today.year, today.month, 1)
+    last_day_of_month = datetime.date(today.year, today.month, monthrange(today.year, today.month)[1])
+    bookings = Booking.objects.filter(room=room, start_time__range=(first_day_of_month, last_day_of_month))
+    booked_days = []
+    for booking in bookings:
+        for i in range(booking.start_time.day, booking.end_time.day + 1):
+            booked_days.append(i)
+    days_of_month = range(1, monthrange(today.year, today.month)[1] + 1)
+
+    context = {
+            'room': room,
+            'days_of_month': days_of_month,
+            'booked_days': booked_days,
+            'today': today,
+    }
+
+    return render(
+        request,
+        "booking/availability_calendar.html",
+        context
+    )
 
 
 def room_delete(request, room_id):
@@ -120,7 +148,7 @@ def booking_list(request):
 def create_room(request):
     if request.user.is_authenticated and request.user.is_superuser:
         if request.method == 'POST':
-            form = RoomForm(request.POST)
+            form = RoomForm(request.POST, request.FILES)
             if form.is_valid():
                 room = form.save()
                 return redirect('room', room.id)
