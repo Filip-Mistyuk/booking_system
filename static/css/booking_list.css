@@ -1,0 +1,39 @@
+
+body {
+    background-color: rgb(255, 255, 255);
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th {
+    background-color: #f2f2f2;
+}
+.container {
+    align-items: center;
+    text-align: center;
+    background-color: #e4dede;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.btn-container {
+    background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+    border-radius: 20px;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+.btn-container:hover {
+    background-position: right center;
+    background-size: 200% auto;
+    -webkit-animation: pulse 2s infinite;
+    animation: pulse512 1.5s infinite;
+}
